@@ -155,6 +155,11 @@ You can find the detailed descriptions of the classes, interfaces and the source
 * [Plus1BannerViewStateListener](https://github.com/WapStart/plus1-android-sdk/blob/master/doc/Plus1BannerViewStateListener.md) - the interface of the observer of the visiability status [Plus1BannerView](https://github.com/WapStart/plus1-android-sdk/blob/master/doc/Plus1BannerView.md)
 * [Plus1BannerDownloadListener](https://github.com/WapStart/plus1-android-sdk/blob/master/doc/Plus1BannerDownloadListener.md) - the interface of the observer of the banner loading
 
+## Разрешение коллизий работы WebView в приложении
+Если вы используете *WebView* в разных Activity вашего приложения, то логика работы этого компонента будет нарушаться. Причины коллизии в том, что по умолчанию sdk вызывает обработчики [pauseTimers()](http://developer.android.com/reference/android/webkit/WebView.html#pauseTimers%28%29) и [resumeTimers()](http://developer.android.com/reference/android/webkit/WebView.html#resumeTimers%28%29) класса *WebView* в соответствующих контекстах событий *onPause* и *onResume* в Activity вашего приложения. Вызовы этих методов влияют на все экземпляры *WebView* и позволяют исключить обработку *WebView* в то время, когда ваше приложение (Activity) не показывается пользователю.
+
+Для разрешения этой коллизии предлагается воспользоваться методом **setDisabledWebViewCorePausing()** класса [Plus1BannerAsker](https://github.com/WapStart/plus1-android-sdk/blob/master/doc/Plus1BannerAsker.md). При этом важно понимать, что *WebView* продолжает работать в то время, когда Activity с баннером приостановлена. Для экономии ресурсов процессора рекомендуем также ограничить использование *WebView* в Activity используя метод **setRemoveBannersOnPause()** класса [Plus1BannerAsker](https://github.com/WapStart/plus1-android-sdk/blob/master/doc/Plus1BannerAsker.md).
+
 
 # Contacts
 
